@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♟️ Chess Fun</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* Gaya Kustom */
+        .dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .light {
+            background-color: #f7fafc;
+            color: #2d3748;
+        }
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 400px;
+            height: 400px;
+            border: 2px solid #333;
+        }
+        .chess-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        .white-square {
+            background-color: #f0d9b5;
+        }
+        .black-square {
+            background-color: #b58863;
+        }
+        .piece-selected {
+            box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.7);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-vh-100 d-flex flex-column">
+    <!-- Menu Utama -->
+    <div id="main-menu" class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center animate__animated animate__fadeIn">
+        <h1 class="display-4 mb-5 fw-bold">♟️ CHESS FUN</h1>
+        
+        <div class="d-grid gap-3 col-md-6 mx-auto">
+            <button id="start-game-btn" class="btn btn-primary btn-lg py-3 animate__animated animate__bounceIn">
+                🎮 MULAI MAIN
+            </button>
+            <button id="settings-btn" class="btn btn-outline-secondary btn-lg py-3 animate__animated animate__bounceIn animate__delay-1s">
+                ⚙️ PENGATURAN
+            </button>
+            <button id="info-btn" class="btn btn-outline-secondary btn-lg py-3 animate__animated animate__bounceIn animate__delay-2s">
+                ℹ️ INFO GAME
+            </button>
+            
+            <div class="form-check form-switch d-flex justify-content-center mt-4 animate__animated animate__fadeIn animate__delay-3s">
+                <label class="form-check-label mx-2" for="theme-toggle">🌓 Mode Gelap</label>
+                <input class="form-check-input theme-toggle" type="checkbox" id="theme-toggle" style="width: 3em; height: 1.5em;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Mulai Main -->
+    <div id="start-game-form" class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center hidden">
+        <div class="card shadow-lg p-4 mb-5 bg-body rounded" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Mode Permainan</h2>
+                
+                <div id="step1" class="fade-in">
+                    <h5 class="mb-3">Langkah 1: Pilih Mode Main</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="card card-hover h-100 cursor-pointer" id="vs-computer">
+                                <div class="card-body text-center">
+                                    <div class="display-4 mb-3">👤</div>
+                                    <h5 class="card-title">Main lawan komputer</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-hover h-100 cursor-pointer" id="vs-friend">
+                                <div class="card-body text-center">
+                                    <div class="display-4 mb-3">👥</div>
+                                    <h5 class="card-title">Main bareng teman</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-secondary float-start" id="back-to-menu-from-start">
+                        ← Kembali
+                    </button>
+                </div>
+                
+                <div id="step2" class="hidden">
+                    <h5 class="mb-3">Langkah 2: Isi Nama Pemain</h5>
+                    <div id="single-player-form">
+                        <div class="mb-3">
+                            <label for="player1-name" class="form-label">Masukkan Nama Kamu</label>
+                            <input type="text" class="form-control" id="player1-name" placeholder="Nama Pemain">
+                        </div>
+                    </div>
+                    <div id="multi-player-form" class="hidden">
+                        <div class="mb-3">
+                            <label for="player1-name-multi" class="form-label">Masukkan Nama Pemain 1</label>
+                            <input type="text" class="form-control" id="player1-name-multi" placeholder="Nama Pemain 1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="player2-name-multi" class="form-label">Masukkan Nama Pemain 2</label>
+                            <input type="text" class="form-control" id="player2-name-multi" placeholder="Nama Pemain 2">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-outline-secondary" id="back-to-step1">
+                            ← Kembali
+                        </button>
+                        <button class="btn btn-primary" id="next-to-step3">
+                            Lanjut →
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="step3" class="hidden text-center">
+                    <div id="welcome-message" class="mb-4">
+                        <h4 class="animate__animated animate__bounceIn">Haii <span id="player-name-display"></span>, seru nih kita siapin catur-nya dulu... 🎉</h4>
+                        <p class="animate__animated animate__fadeIn animate__delay-1s">Kalau kamu baru main, santai aja~ Yuk kita kasih lihat cara mainnya sebentar.</p>
+                    </div>
+                    
+                    <div id="tutorial-card" class="card mb-4 animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="card-header bg-primary text-white">
+                            📚 Cara Bermain Catur
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Aturan Dasar</h5>
+                            <ul class="text-start">
+                                <li>Setiap pemain bergantian menggerakkan buah catur</li>
+                                <li>Tujuan utama adalah melakukan skakmat ke raja lawan</li>
+                                <li>Setiap buah catur memiliki cara gerak yang berbeda</li>
+                                <li>Pion bisa bergerak maju, tapi menyerang secara diagonal</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="btn btn-outline-secondary" id="skip-tutorial">
+                            ⏭️ Skip Aja Yuk
+                        </button>
+                        <button class="btn btn-success" id="start-chess-game">
+                            ✅ Saya Siap Main
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Pengaturan -->
+    <div id="settings-form" class="container flex-grow-1 d-flex flex-column justify-content-center hidden">
+        <div class="card shadow-lg p-4 mb-5 bg-body rounded" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">⚙️ PENGATURAN</h2>
+                
+                <div class="mb-4">
+                    <h5>🔊 Kontrol Suara</h5>
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="range" class="form-range" id="volume-slider" min="0" max="100" value="70">
+                        <button class="btn btn-outline-secondary" id="mute-btn">Mute</button>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>🧠 Level Tantangan</h5>
+                    <select class="form-select" id="difficulty-level">
+                        <option value="easy">Mudah</option>
+                        <option value="medium" selected>Sedang</option>
+                        <option value="hard">Sulit</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>🏁 Skor Terakhir</h5>
+                    <div class="card bg-light p-3">
+                        <p id="last-score" class="mb-0">Belum ada data pertandingan</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>🌍 Pilih Bahasa</h5>
+                    <div class="d-flex gap-2 mb-2">
+                        <button class="btn btn-sm btn-outline-primary" id="auto-detect-lang">Deteksi Otomatis</button>
+                        <select class="form-select" id="language-select">
+                            <option value="id">Indonesia</option>
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">🌓 Mode Gelap/Terang</h5>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input theme-toggle" type="checkbox" id="theme-toggle-settings" style="width: 3em; height: 1.5em;">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary w-100 mt-4" id="back-to-menu-from-settings">
+                    Kembali ke Menu Utama
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Info Game -->
+    <div id="info-form" class="container flex-grow-1 d-flex flex-column justify-content-center hidden">
+        <div class="card shadow-lg p-4 mb-5 bg-body rounded" style="width: 100%; max-width: 600px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">ℹ️ INFORMASI GAME</h2>
+                
+                <div class="mb-4">
+                    <h5>📘 Cara Main Catur</h5>
+                    <div class="card bg-light p-3 mb-3">
+                        <p><strong>Tujuan permainan:</strong> Melakukan skakmat ke raja lawan.</p>
+                        <p><strong>Giliran jalan:</strong> Pemain putih mulai duluan, lalu bergantian.</p>
+                        <p><strong>Skakmat:</strong> Ketika raja tidak bisa menghindar dari serangan.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>⚠️ Aturan & Sanksi</h5>
+                    <div class="card bg-light p-3">
+                        <ul>
+                            <li>Tidak bergerak dalam 30 detik → -1 poin</li>
+                            <li>Melanggar giliran → giliran hilang</li>
+                            <li>Keluar sebelum selesai → skor tidak disimpan</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary w-100 mt-4" id="back-to-menu-from-info">
+                    Kembali ke Menu Utama
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Papan Catur -->
+    <div id="chess-board-container" class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center hidden">
+        <div class="d-flex justify-content-between w-100 mb-3" style="max-width: 600px;">
+            <div class="text-center">
+                <h5 id="white-player-name" class="fw-bold">Putih: Pemain 1</h5>
+                <div id="white-timer" class="badge bg-primary fs-6">00:00</div>
+            </div>
+            <div class="text-center">
+                <h5 class="text-muted">VS</h5>
+            </div>
+            <div class="text-center">
+                <h5 id="black-player-name" class="fw-bold">Hitam: Pemain 2</h5>
+                <div id="black-timer" class="badge bg-dark fs-6">00:00</div>
+            </div>
+        </div>
+        
+        <div id="chess-board" class="chess-board mb-4"></div>
+        
+        <div id="game-message" class="alert alert-info text-center mb-3" style="max-width: 600px; display: none;"></div>
+        
+        <div class="d-flex gap-3">
+            <button class="btn btn-outline-danger" id="reset-game-btn">
+                🔄 Reset Game
+            </button>
+            <button class="btn btn-outline-secondary" id="back-to-menu-from-game">
+                🏠 Kembali ke Menu
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variabel global
+        let currentTheme = 'light';
+        let gameMode = null;
+        let currentStep = 1;
+        let player1Name = '';
+        let player2Name = '';
+        
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set tema awal
+            setTheme(currentTheme);
+            
+            // Inisialisasi papan catur
+            initializeChessBoard();
+            
+            // Event listener untuk tombol tema
+            document.getElementById('theme-toggle').addEventListener('change', toggleTheme);
+            document.getElementById('theme-toggle-settings').addEventListener('change', toggleTheme);
+            
+            // Event listener untuk menu utama
+            document.getElementById('start-game-btn').addEventListener('click', showStartGameForm);
+            document.getElementById('settings-btn').addEventListener('click', showSettingsForm);
+            document.getElementById('info-btn').addEventListener('click', showInfoForm);
+            
+            // Event listener untuk form mulai main
+            document.getElementById('vs-computer').addEventListener('click', () => selectGameMode('computer'));
+            document.getElementById('vs-friend').addEventListener('click', () => selectGameMode('friend'));
+            document.getElementById('back-to-menu-from-start').addEventListener('click', showMainMenu);
+            document.getElementById('back-to-step1').addEventListener('click', backToStep1);
+            document.getElementById('next-to-step3').addEventListener('click', proceedToStep3);
+            document.getElementById('skip-tutorial').addEventListener('click', startChessGame);
+            document.getElementById('start-chess-game').addEventListener('click', startChessGame);
+            
+            // Event listener untuk form pengaturan
+            document.getElementById('back-to-menu-from-settings').addEventListener('click', showMainMenu);
+            document.getElementById('auto-detect-lang').addEventListener('click', detectLanguage);
+            
+            // Event listener untuk form info
+            document.getElementById('back-to-menu-from-info').addEventListener('click', showMainMenu);
+            
+            // Event listener untuk game
+            document.getElementById('reset-game-btn').addEventListener('click', resetChessGame);
+            document.getElementById('back-to-menu-from-game').addEventListener('click', showMainMenu);
+        });
+        
+        // Fungsi tema
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(currentTheme);
+            
+            // Sync toggle switch
+            document.getElementById('theme-toggle').checked = currentTheme === 'dark';
+            document.getElementById('theme-toggle-settings').checked = currentTheme === 'dark';
+        }
+        
+        function setTheme(theme) {
+            document.documentElement.className = theme;
+            localStorage.setItem('theme', theme);
+        }
+        
+        // Fungsi navigasi
+        function showMainMenu() {
+            hideAllForms();
+            document.getElementById('main-menu').classList.remove('hidden');
+            currentStep = 1;
+        }
+        
+        function showStartGameForm() {
+            hideAllForms();
+            document.getElementById('start-game-form').classList.remove('hidden');
+            resetStartForm();
+        }
+        
+        function showSettingsForm() {
+            hideAllForms();
+            document.getElementById('settings-form').classList.remove('hidden');
+        }
+        
+        function showInfoForm() {
+            hideAllForms();
+            document.getElementById('info-form').classList.remove('hidden');
+        }
+        
+        function showChessBoard() {
+            hideAllForms();
+            document.getElementById('chess-board-container').classList.remove('hidden');
+            
+            // Set nama pemain
+            document.getElementById('white-player-name').textContent = `Putih: ${player1Name}`;
+            document.getElementById('black-player-name').textContent = `Hitam: ${player2Name}`;
+            
+            // Tampilkan pesan giliran
+            showGameMessage(`Giliran ${player1Name} (Putih) untuk bermain`);
+        }
+        
+        function hideAllForms() {
+            const forms = [
+                'main-menu', 
+                'start-game-form', 
+                'settings-form', 
+                'info-form', 
+                'chess-board-container'
+            ];
+            
+            forms.forEach(formId => {
+                document.getElementById(formId).classList.add('hidden');
+            });
+        }
+        
+        // Fungsi form mulai main
+        function selectGameMode(mode) {
+            gameMode = mode;
+            
+            // Animasi pilihan
+            if (mode === 'computer') {
+                document.getElementById('vs-computer').classList.add('border-primary', 'border-3');
+                document.getElementById('vs-friend').classList.remove('border-primary', 'border-3');
+            } else {
+                document.getElementById('vs-computer').classList.remove('border-primary', 'border-3');
+                document.getElementById('vs-friend').classList.add('border-primary', 'border-3');
+            }
+            
+            // Lanjut ke langkah 2
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            
+            // Tampilkan form yang sesuai
+            if (mode === 'computer') {
+                document.getElementById('single-player-form').classList.remove('hidden');
+                document.getElementById('multi-player-form').classList.add('hidden');
+            } else {
+                document.getElementById('single-player-form').classList.add('hidden');
+                document.getElementById('multi-player-form').classList.remove('hidden');
+            }
+            
+            currentStep = 2;
+        }
+        
+        function backToStep1() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+            currentStep = 1;
+        }
+        
+        function proceedToStep3() {
+            // Validasi nama pemain
+            if (gameMode === 'computer') {
+                player1Name = document.getElementById('player1-name').value.trim();
+                player2Name = 'Komputer';
+                
+                if (!player1Name) {
+                    alert('Silakan masukkan nama kamu terlebih dahulu');
+                    return;
+                }
+            } else {
+                player1Name = document.getElementById('player1-name-multi').value.trim();
+                player2Name = document.getElementById('player2-name-multi').value.trim();
+                
+                if (!player1Name || !player2Name) {
+                    alert('Silakan masukkan nama kedua pemain terlebih dahulu');
+                    return;
+                }
+            }
+            
+            // Update tampilan nama pemain
+            document.getElementById('player-name-display').textContent = player1Name;
+            
+            // Lanjut ke langkah 3
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+            currentStep = 3;
+        }
+        
+        function resetStartForm() {
+            // Reset pilihan mode
+            gameMode = null;
+            document.getElementById('vs-computer').classList.remove('border-primary', 'border-3');
+            document.getElementById('vs-friend').classList.remove('border-primary', 'border-3');
+            
+            // Reset form nama
+            document.getElementById('player1-name').value = '';
+            document.getElementById('player1-name-multi').value = '';
+            document.getElementById('player2-name-multi').value = '';
+            
+            // Tampilkan langkah 1
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+            currentStep = 1;
+        }
+        
+        // Fungsi game catur
+        function initializeChessBoard() {
+            const board = document.getElementById('chess-board');
+            board.innerHTML = '';
+            
+            // Buat papan catur 8x8
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const square = document.createElement('div');
+                    square.className = `chess-square ${(row + col) % 2 === 0 ? 'white-square' : 'black-square'}`;
+                    square.dataset.row = row;
+                    square.dataset.col = col;
+                    
+                    // Tambahkan event listener untuk klik
+                    square.addEventListener('click', handleSquareClick);
+                    
+                    // Tambahkan buah catur (ini hanya contoh, implementasi sebenarnya lebih kompleks)
+                    if (row === 0 || row === 7) {
+                        const pieces = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'];
+                        square.textContent = row === 0 ? pieces[col] : pieces[col].toLowerCase();
+                    } else if (row === 1 || row === 6) {
+                        square.textContent = row === 1 ? '♟' : '♙';
+                    }
+                    
+                    board.appendChild(square);
+                }
+            }
+        }
+        
+        function handleSquareClick(event) {
+            const square = event.currentTarget;
+            
+            // Contoh sederhana: highlight kotak yang diklik
+            document.querySelectorAll('.chess-square').forEach(sq => {
+                sq.classList.remove('piece-selected');
+            });
+            
+            if (square.textContent) {
+                square.classList.add('piece-selected');
+            }
+        }
+        
+        function startChessGame() {
+            showChessBoard();
+            
+            // Simpan skor terakhir (contoh)
+            const lastScoreElement = document.getElementById('last-score');
+            if (gameMode === 'computer') {
+                lastScoreElement.textContent = `${player1Name} vs Komputer - Belum ada hasil`;
+            } else {
+                lastScoreElement.textContent = `${player1Name} vs ${player2Name} - Belum ada hasil`;
+            }
+        }
+        
+        function resetChessGame() {
+            if (confirm('Apakah kamu yakin ingin mengulang permainan?')) {
+                initializeChessBoard();
+                showGameMessage('Permainan diulang! Giliran Putih mulai bermain');
+            }
+        }
+        
+        function showGameMessage(message) {
+            const messageElement = document.getElementById('game-message');
+            messageElement.textContent = message;
+            messageElement.style.display = 'block';
+            
+            // Sembunyikan pesan setelah 3 detik
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Fungsi pengaturan
+        function detectLanguage() {
+            // Contoh sederhana deteksi bahasa
+            const userLang = navigator.language || navigator.userLanguage;
+            let langCode = userLang.split('-')[0];
+            
+            // Hanya support beberapa bahasa
+            const supportedLangs = ['id', 'en', 'es', 'fr'];
+            if (!supportedLangs.includes(langCode)) {
+                langCode = 'id'; // Default ke Indonesia
+            }
+            
+            document.getElementById('language-select').value = langCode;
+            alert(`Bahasa terdeteksi: ${getLanguageName(langCode)}`);
+        }
+        
+        function getLanguageName(code) {
+            const languages = {
+                'id': 'Indonesia',
+                'en': 'Inggris',
+                'es': 'Spanyol',
+                'fr': 'Prancis'
+            };
+            return languages[code] || 'Indonesia';
+        }
+    </script>
+</body>
+</html>
