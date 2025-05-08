@@ -34,7 +34,8 @@ Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pem
 
 📜 Riwayat permainan & fitur replay
 
-🚧 Kekurangan & Yang Masih Aku Kembangin
+
+## 🚧 Kekurangan & Yang Masih Aku Kembangin
 🛠️ Dalam Proses Penyempurnaan
 
 🌐 Mode online multiplayer (coming soon!)
@@ -45,7 +46,10 @@ Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pem
 
 🏆 Sistem leaderboard global
 
+
+
 ## 🔧 Bagian Kode yang Bisa Dimodifikasi
+
 
 ### 🎨 Tema dan Tampilan
 ```javascript
