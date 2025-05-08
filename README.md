@@ -6,7 +6,7 @@
 Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pemula sampai yang udah mahir.
 
 ## 🌟 Fitur-Fitur Super Keren
-🔥 Tampilan Futuristik
+3🔥 Tampilan Futuristik
 
 🌗 Mode Gelap/Mode Terang (auto-save preferensi kamu)
 
@@ -14,7 +14,7 @@ Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pem
 
 🎨 4 tema papan berbeda (classic, wood, blue, green)
 
-🎮 Mode Permainan Seru
+#🎮 Mode Permainan Seru
 
 🤖 VS AI (3 level kesulitan: Easy, Medium, Hard)
 
@@ -22,7 +22,7 @@ Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pem
 
 🏆 Sistem statistik pemain (track record kemenanganmu)
 
-⚡ Fitur Gameplay Canggih
+#⚡ Fitur Gameplay Canggih
 
 ⏱️ Timer game yang bisa disesuaikan (5-60 menit)
 
@@ -36,7 +36,7 @@ Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pem
 
 
 ## 🚧 Kekurangan & Yang Masih Aku Kembangin
-🛠️ Dalam Proses Penyempurnaan
+#🛠️ Dalam Proses Penyempurnaan
 
 🌐 Mode online multiplayer (coming soon!)
 
