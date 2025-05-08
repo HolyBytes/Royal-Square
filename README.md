@@ -1,54 +1,47 @@
 # Royal-Square - Game Catur Modern
-
 **Dibuat oleh [Ade Pratama](https://github.com/HolyBytes)**  
 ✨ [Coba Sekarang](https://holybytes.github.io/Royal-Square/) | 📷 [Instagram](https://instagram.com/ryuu_adehara) | 🎵 [TikTok](https://tiktok.com/@anindya_lover12)
 
-Game catur berbasis web dengan antarmuka sederhana tapi powerful. Cocok buat pemula sampai yang udah mahir.
+> *"Bidak putih atau hitam pilihan,*  
+> *Strategi catur ujian pikiran,*  
+> *Royal-Square hadir dengan keindahan,*  
+> *Permainan klasik dengan sentuhan kekinian."*
 
-## 🌟 Fitur-Fitur Super Keren
-- 🔥 Tampilan Futuristik
+Halo! Ini game catur berbasis web dengan tampilan simpel tapi keren banget. Cocok buat kamu yang baru belajar sampai yang udah jago main catur.
 
-🌗 Mode Gelap/Mode Terang (auto-save preferensi kamu)
+## 🌟 Fitur-Fitur Kece
 
-📱 Responsif di semua device (HP, Tablet, Laptop)
+### 🔥 Tampilan Kekinian
+- 🌗 Mode Gelap/Terang (otomatis nyimpen pilihan kamu)
+- 📱 Enak dipake di semua device (HP, Tablet, Laptop)
+- 🎨 Ada 4 tema papan beda (klasik, kayu, biru, hijau)
 
-🎨 4 tema papan berbeda (classic, wood, blue, green)
+### 🎮 Mode Main yang Seru
+- 🤖 Lawan AI (ada 3 level: Gampang, Sedang, Susah)
+- 👥 Main bareng temen (bisa 2 orang di 1 device)
+- 🏆 Ada catatan statistik (biar tau seberapa jago kamu)
 
-- 🎮 Mode Permainan Seru
+### ⚡ Fitur Game yang Keren
+- ⏱️ Timer yang bisa diatur sendiri (5-60 menit)
+- 🔊 Suara-suara yang bikin serasa main beneran
+- 🔍 Ada highlight gerakan valid & langkah terakhir
+- 🔄 Bisa putar papan 180° (buat lihat dari sudut lawan)
+- 📜 Riwayat permainan & bisa nonton ulang
 
-🤖 VS AI (3 level kesulitan: Easy, Medium, Hard)
+> *"Raja melangkah satu-satu,*  
+> *Kuda melompat bentuk L selalu,*  
+> *Royal-Square temani harimu,*  
+> *Asah otak sambil ngadem di AC atau di bawah pohon jambu."*
 
-👥 VS Teman (2 pemain di 1 device)
+## 🚧 Yang Masih Dibenerin
 
-🏆 Sistem statistik pemain (track record kemenanganmu)
+- 🌐 Mode main online (sebentar lagi ada!)
+- 📊 Analisis gerakan setelah main
+- 🎥 Animasi bidak yang lebih halus
+- 🏆 Peringkat pemain global
 
-- ⚡ Fitur Gameplay Canggih
+## 🔧 Bagian Kode yang Bisa Diutak-atik
 
-⏱️ Timer game yang bisa disesuaikan (5-60 menit)
-
-🔊 Efek suara realistis (gerakan, serangan, skakmat)
-
-🔍 Highlight gerakan valid & last move
-
-🔄 Putar papan 180° (buat yang suka perspektif berbeda)
-
-📜 Riwayat permainan & fitur replay
-
-
-## 🚧 Kekurangan & Yang Masih Aku Kembangin
-- 🛠️ Dalam Proses Penyempurnaan
-
-🌐 Mode online multiplayer (coming soon!)
-
-📊 Analisis game pasca-permainan
-
-🎥 Animasi gerakan bidak yang lebih smooth
-
-🏆 Sistem leaderboard global
-
-
-
-## 🔧 Bagian Kode yang Bisa Dimodifikasi
 ### 🎨 Tema dan Tampilan
 ```javascript
 // assets/js/theme.js
@@ -57,97 +50,109 @@ const themes = {
     lightSquare: '#f0d9b5',
     darkSquare: '#b58863'
   },
-  // Tambahkan tema custom disini
+  // Mau bikin tema sendiri? Tambahin di sini
   custom: {
-    lightSquare: '#yourColor',
-    darkSquare: '#yourColor' 
+    lightSquare: '#warnaPilihanmu',
+    darkSquare: '#warnaPilihanmu' 
   }
 }
 ```
-**Alasan**: Warna dan tema bisa disesuaikan tanpa ganggu logika game
+**Kenapa boleh diubah**: Ganti warna sesuka hati tanpa ngerusak game-nya
 
 ### 🔊 Efek Suara
 ```html
 <!-- index.html -->
 <audio id="moveSound" src="sounds/custom-move.mp3"></audio>
 ```
-**Alasan**: Bisa diganti dengan file suara custom
+**Kenapa boleh diubah**: Mau suara yang lebih asik? Ganti aja filenya
 
-### 🎚️ Tingkat Kesulitan
+### 🎚️ Level Kesulitan
 ```javascript
 // assets/js/ai.js
 function setDifficulty(level) {
-  // Atur kedalaman analisis AI
+  // Atur seberapa pinter AI-nya
   if(level === 'easy') {
     this.depth = 1;
   }
-  // Bisa ditambah level custom
+  // Mau bikin level custom? Bisa ditambahin di sini
 }
 ```
-**Alasan**: Parameter AI bisa disesuaikan
+**Kenapa boleh diubah**: Biar bisa diatur sendiri gimana AI-nya main
 
-## ⚠️ Jangan Diubah Kalau Nggak Ngerti Konsekuensinya
+## ⚠️ Jangan Diotak-atik Kalau Nggak Ngerti
 
 ### ♟️ Aturan Gerakan Bidak
 ```javascript
 // assets/js/game-logic.js
 function validateMove(piece, from, to) {
-  // Logika validasi gerakan
+  // Logika cek gerakan
   if(piece.type === 'pawn') {
     // Aturan khusus pion
   }
-  // Jangan diubah kecuali paham betul aturan catur
+  // Awas, jangan diubah kalo gak paham aturan catur!
 }
 ```
-**Alasan**: Mengubah ini bisa bikin aturan catur jadi tidak valid
+**Kenapa jangan diubah**: Bisa bikin aturan catur jadi kacau
 
-### 🏗️ Struktur Dasar Papan
+### 🏗️ Struktur Papan
 ```html
 <div id="chess-board">
-  <!-- 64 squares dengan struktur spesifik -->
+  <!-- 64 kotak dengan struktur tertentu -->
   <div class="row" data-row="0">...</div>
   ...
 </div>
 ```
-**Alasan**: Layout papan harus tetap 8x8 grid
+**Kenapa jangan diubah**: Papan catur emang harus 8x8, kalo diubah malah aneh
 
 ### 💾 Sistem Penyimpanan
 ```javascript
 // assets/js/storage.js
 function saveGame(state) {
-  // Format penyimpanan harus konsisten
+  // Format nyimpen data harus tetep sama
   localStorage.setItem('gameState', JSON.stringify(state));
 }
 ```
-**Alasan**: Format data harus tetap sama biar kompatibel
+**Kenapa jangan diubah**: Biar data tersimpan dengan benar
 
-Dampak kalau diubah sembarangan:
-🛑 Game bisa error total
-🛑 Fitur undo/replay nggak bakal work
-🛑 Kompatibilitas versi selanjutnya bisa broken
+Kalo nekat diubah:
+🛑 Game bakal rusak/error
+🛑 Fitur undo/replay bakal ngaco
+🛑 Update versi berikutnya bisa jadi gak nyambung
 
-## 🐛 Melaporkan Masalah
+## 🐛 Mau Lapor Bug?
 
-Ketemu bug atau punya saran?  
-Buka [issue di GitHub](https://github.com/HolyBytes/Royal-Square/issues) atau DM Instagram [@ryuu_adehara](https://instagram.com/ryuu_adehara)
+Nemu masalah atau punya ide keren?  
+Langsung aja [buka issue di GitHub](https://github.com/HolyBytes/Royal-Square/issues) atau DM Instagram [@ryuu_adehara](https://instagram.com/ryuu_adehara)
 
 ## 📜 Lisensi & Hak Cipta
 
 © 2025 ADE PRATAMA - All Rights Reserved
 Lisensi: https://github.com/HolyBytes
 
-##Yang diperbolehkan:
+### Yang boleh kamu lakukan:
+✅ Pake buat belajar coding
+✅ Modifikasi buat keperluan sendiri
+✅ Bagikan ke orang lain (jangan lupa kredit ya!)
 
-✅ Pakai buat belajar programming
-✅ Modifikasi untuk keperluan pribadi
-✅ Sebarkan dengan tetap mencantumkan kredit
+### Yang gak boleh kamu lakukan:
+❌ Jual tanpa izin dari pembuat
+❌ Ngaku-ngaku ini buatan kamu
+❌ Pake buat bisnis tanpa bilang-bilang dulu
 
-##Yang dilarang:
-
-❌ Jual kembali tanpa izin
-❌ Klaim sebagai karya sendiri
-❌ Gunakan untuk tujuan komersial tanpa persetujuan
 ---
 
-Dikembangkan dengan HTML, CSS, dan JavaScript murni.  
-Ikon dari [Font Awesome](https://fontawesome.com) dan [Twemoji](https://twemoji.twitter.com).
+> *"Skak mat akhiri permainan,*  
+> *Royal-Square bawa pengalaman,*  
+> *Di dunia digital penuh kebahagiaan,*  
+> *Main catur jadi lebih menyenangkan."*
+
+## ✨ Selamat Mencoba!
+
+Yuk cobain Royal-Square sekarang dan rasain serunya main catur versi digital! Siapa tau kamu bisa jadi GM (Grand Master) berikutnya dari Indonesia! Semoga game ini bisa nemenin waktu senggang kamu dan bikin hidup lebih seru!
+
+## 🙏 Maaf Kalau Masih Ada Kekurangan
+
+Mohon maaf kalau Royal-Square masih jauh dari sempurna. Sebagai project yang masih terus berkembang, pasti masih banyak kurangnya di sana-sini. Feedback kamu sangat berharga buat bikin game ini jadi lebih oke lagi. Makasih udah mau nyobain dan support project ini!
+
+Dibuat pake HTML, CSS, dan JavaScript murni.  
+Ikon-ikon dari [Font Awesome](https://fontawesome.com) dan [Twemoji](https://twemoji.twitter.com).
