@@ -132,15 +132,18 @@ Ketemu bug atau punya saran?
 Buka [issue di GitHub](https://github.com/HolyBytes/Royal-Square/issues) atau DM Instagram [@ryuu_adehara](https://instagram.com/ryuu_adehara)
 
 ## 📜 Lisensi & Hak Cipta
+
 © 2025 ADE PRATAMA - All Rights Reserved
 Lisensi: https://github.com/HolyBytes
 
-Yang diperbolehkan:
+##Yang diperbolehkan:
+
 ✅ Pakai buat belajar programming
 ✅ Modifikasi untuk keperluan pribadi
 ✅ Sebarkan dengan tetap mencantumkan kredit
 
-Yang dilarang:
+##Yang dilarang:
+
 ❌ Jual kembali tanpa izin
 ❌ Klaim sebagai karya sendiri
 ❌ Gunakan untuk tujuan komersial tanpa persetujuan
